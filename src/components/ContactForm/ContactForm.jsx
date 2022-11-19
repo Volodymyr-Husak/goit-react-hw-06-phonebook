@@ -127,7 +127,7 @@ export const ContactForm = ({ addToContactsProps, items }) => {
     const form = e.currentTarget;
     let presenceContact = false;
 
-    contacts.map(({ name }) => {
+    contacts.arr.map(({ name }) => {
       if (name === form.name.value) {
         form.reset();
         presenceContact = true;

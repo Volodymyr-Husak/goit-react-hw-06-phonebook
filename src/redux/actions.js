@@ -1,51 +1,51 @@
-import { nanoid } from 'nanoid';
+//=============== Before ========================
+// import { nanoid } from 'nanoid';
 
-// export const addTask = text => {
+// export const addContact = (name, number) => {
 //   return {
-//     type: "tasks/addTask",
+//     type: 'contacts/addContact',
 //     payload: {
 //       id: nanoid(),
-//       completed: false,
-//       text,
+//       name,
+//       number,
 //     },
 //   };
 // };
 
-export const addContact = (name, number) => {
-  return {
-    type: 'contacts/addContact',
-    payload: {
-      id: nanoid(),
-      name,
-      number,
-    },
-  };
-};
-
-// export const deleteTask = taskId => {
+// export const deleteContact = contactId => {
 //   return {
-//     type: 'tasks/deleteTask',
-//     payload: taskId,
+//     type: 'contacts/deleteContact',
+//     payload: contactId,
 //   };
 // };
 
-export const deleteContact = contactId => {
-  return {
-    type: 'contacts/deleteContact',
-    payload: contactId,
-  };
-};
-
-// export const setStatusFilter = value => {
+// export const setFilter = value => {
 //   return {
-//     type: 'filters/setStatusFilter',
+//     type: 'filter/setFilter',
 //     payload: value,
 //   };
 // };
 
-export const setFilter = value => {
-  return {
-    type: 'filter/setFilter',
-    payload: value,
-  };
-};
+// ===============================================================================================================
+// ===============================================================================================================
+// =============================================== After =========================================================
+
+import { createAction, nanoid } from '@reduxjs/toolkit';
+
+export const addContact = createAction(
+  'contacts/addContact',
+  (name, number) => {
+    return {
+      payload: {
+        id: nanoid(),
+        name,
+        number,
+      },
+    };
+  }
+);
+// console.log(addContact.payload);
+// console.log(addContact('aaaaaaaaa', 88888));
+export const deleteContact = createAction('contacts/deleteContact');
+
+export const setFilter = createAction('filter/setFilter');

@@ -47,25 +47,15 @@ import { useDispatch } from 'react-redux';
 // Імпортуємо генератор екшену
 import { deleteContact } from 'redux/actions';
 
-// const getVisibleContacts = (contacts, statusFilter) => {
-//   switch (statusFilter) {
-//     case statusFilters.active:
-//       return tasks.filter(task => !task.completed);
-//     case statusFilters.completed:
-//       return tasks.filter(task => task.completed);
-//     default:
-//       return tasks;
-//   }
-// };
 const getVisibleContacts = (contacts, filter) => {
-  if (filter.length === 0) {
-    return contacts;
+  if (filter.value.length === 0) {
+    return contacts.arr;
   }
-  const contactsArr = contacts;
+  const contactsArr = contacts.arr;
 
   const contactsFindArr = contactsArr.filter(({ name }) => {
     const nameContact = name.toLowerCase();
-    const nameFilter = filter.toLowerCase();
+    const nameFilter = filter.value.toLowerCase();
     return nameContact.includes(nameFilter);
   });
 
@@ -82,7 +72,7 @@ export const Contacts = ({ findItems, deleteContactProps }) => {
     const currentId = e.currentTarget.id;
     dispatch(deleteContact(currentId));
   };
-  // console.log(filter);
+
   const visibleContacts = getVisibleContacts(contacts, filter);
 
   return visibleContacts.map(({ name, number, id }) => (
