@@ -1,35 +1,135 @@
-import propTypes from 'prop-types';
+// import propTypes from 'prop-types';
+// import css from './ContactForm.module.css';
+// import { nanoid } from 'nanoid';
+// import { useState } from 'react';
+
+// export const ContactForm = ({ addToContactsProps, items }) => {
+//   const [nameHook, setNameHook] = useState('');
+//   const [number, setNumber] = useState('');
+
+//   const handleOnInputChange = e => {
+//     const inputName = e.target.name;
+//     switch (inputName) {
+//       case 'name':
+//         setNameHook(e.target.value);
+//         break;
+//       case 'number':
+//         setNumber(e.target.value);
+//         break;
+//       default:
+//         console.log('Sorry, we are out of ' + inputName + '.');
+//     }
+//   };
+
+//   const handleOnSubmit = e => {
+//     e.preventDefault();
+
+//     let presenceContact = false;
+
+//     items.map(({ name }) => {
+//       if (name === nameHook) {
+//         e.currentTarget.name.value = '';
+//         e.currentTarget.number.value = '';
+//         presenceContact = true;
+//         return alert(`${name} is already in contacts`);
+//       } else {
+//         return null;
+//       }
+//     });
+
+//     if (!presenceContact) {
+//       setNameHook(e.currentTarget.name.value);
+//       setNumber(e.currentTarget.number.value);
+
+//       addToContactsProps(nanoid(), nameHook, number);
+
+//       e.currentTarget.name.value = '';
+//       e.currentTarget.number.value = '';
+//     }
+//   };
+//   return (
+//     <div className={css.form}>
+//       <form onSubmit={handleOnSubmit}>
+//         <label>
+//           Name
+//           <input
+//             type="text"
+//             name="name"
+//             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+//             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+//             required
+//             onChange={handleOnInputChange}
+//           />
+//         </label>
+//         <label>
+//           Number
+//           <input
+//             type="tel"
+//             name="number"
+//             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+//             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+//             required
+//             onChange={handleOnInputChange}
+//           />
+//         </label>
+
+//         <button className={css.btn} type="submit">
+//           Add contacts
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// ContactForm.propTypes = {
+//   addToContactsProps: propTypes.func.isRequired,
+//   items: propTypes.array.isRequired,
+// };
+
+//=========================================================================================================
+//=========================================================================================================
+//=========================================================================================================
+
+// import propTypes from 'prop-types';
 import css from './ContactForm.module.css';
-import { nanoid } from 'nanoid';
-import { useState } from 'react';
+// import { nanoid } from 'nanoid';
+// import { useState } from 'react';
+
+import { getContacts } from 'redux/selectors'; //redux
+import { useSelector } from 'react-redux'; //redux
+import { useDispatch } from 'react-redux'; //redux
+import { addContact } from '../../redux/actions';
 
 export const ContactForm = ({ addToContactsProps, items }) => {
-  const [nameHook, setNameHook] = useState('');
-  const [number, setNumber] = useState('');
+  // const [nameHook, setNameHook] = useState('');
+  // const [number, setNumber] = useState('');
 
-  const handleOnInputChange = e => {
-    const inputName = e.target.name;
-    switch (inputName) {
-      case 'name':
-        setNameHook(e.target.value);
-        break;
-      case 'number':
-        setNumber(e.target.value);
-        break;
-      default:
-        console.log('Sorry, we are out of ' + inputName + '.');
-    }
-  };
+  const contacts = useSelector(getContacts); //redux
+  const dispatch = useDispatch(); //redux
+
+  // const handleOnInputChange = e => {
+  //   const inputName = e.target.name;
+  //   switch (inputName) {
+  //     case 'name':
+  //       // setNameHook(e.target.value);
+  //       break;
+  //     case 'number':
+  //       // setNumber(e.target.value);
+  //       break;
+  //     default:
+  //       console.log('Sorry, we are out of ' + inputName + '.');
+  //   }
+  // };
 
   const handleOnSubmit = e => {
     e.preventDefault();
 
+    const form = e.currentTarget;
     let presenceContact = false;
 
-    items.map(({ name }) => {
-      if (name === nameHook) {
-        e.currentTarget.name.value = '';
-        e.currentTarget.number.value = '';
+    contacts.map(({ name }) => {
+      if (name === form.name.value) {
+        form.reset();
         presenceContact = true;
         return alert(`${name} is already in contacts`);
       } else {
@@ -38,13 +138,15 @@ export const ContactForm = ({ addToContactsProps, items }) => {
     });
 
     if (!presenceContact) {
-      setNameHook(e.currentTarget.name.value);
-      setNumber(e.currentTarget.number.value);
+      // setNameHook(e.currentTarget.name.value);
+      // setNumber(e.currentTarget.number.value);
 
-      addToContactsProps(nanoid(), nameHook, number);
+      dispatch(addContact(form.name.value, form.number.value));
+      // addToContactsProps(nanoid(), nameHook, number);
 
-      e.currentTarget.name.value = '';
-      e.currentTarget.number.value = '';
+      // e.currentTarget.name.value = '';
+      // e.currentTarget.number.value = '';
+      form.reset();
     }
   };
   return (
@@ -58,7 +160,7 @@ export const ContactForm = ({ addToContactsProps, items }) => {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            onChange={handleOnInputChange}
+            // onChange={handleOnInputChange}
           />
         </label>
         <label>
@@ -69,7 +171,7 @@ export const ContactForm = ({ addToContactsProps, items }) => {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            onChange={handleOnInputChange}
+            // onChange={handleOnInputChange}
           />
         </label>
 
@@ -81,7 +183,7 @@ export const ContactForm = ({ addToContactsProps, items }) => {
   );
 };
 
-ContactForm.propTypes = {
-  addToContactsProps: propTypes.func.isRequired,
-  items: propTypes.array.isRequired,
-};
+// ContactForm.propTypes = {
+//   addToContactsProps: propTypes.func.isRequired,
+//   items: propTypes.array.isRequired,
+// };

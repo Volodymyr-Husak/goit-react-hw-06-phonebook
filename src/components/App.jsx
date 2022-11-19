@@ -1,60 +1,67 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Section } from './Section/Section';
 import { ContactList } from './Contacts/ContactList';
 
+// import { useSelector } from 'react-redux'; //redux
+import { ContactsCounter } from './ContactsCounter/ContactsCounter';
+
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState([]);
+  // const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    try {
-      const contactsWithLocalSt = localStorage.getItem('contacts');
-      return contactsWithLocalSt === null
-        ? undefined
-        : setContacts(JSON.parse(contactsWithLocalSt));
-    } catch (error) {
-      console.error('Get state error: ', error.message);
-    }
-  }, []);
+  // const value = useSelector(state => state.some.value); //redux
+  // const value = useSelector(state => state); //redux
+  // console.log('value');
 
-  useEffect(() => {
-    if (contacts.length > 0) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-  }, [contacts]);
+  // useEffect(() => {
+  //   try {
+  //     const contactsWithLocalSt = localStorage.getItem('contacts');
+  //     return contactsWithLocalSt === null
+  //       ? undefined
+  //       : setContacts(JSON.parse(contactsWithLocalSt));
+  //   } catch (error) {
+  //     console.error('Get state error: ', error.message);
+  //   }
+  // }, []);
 
-  const handleOnInputChange = e => {
-    const nameInput = e.currentTarget.name;
-    setFilter(e.target.value);
-    if (nameInput === 'filter') {
-      filterContacts();
-    }
-  };
+  // useEffect(() => {
+  //   if (contacts.length > 0) {
+  //     localStorage.setItem('contacts', JSON.stringify(contacts));
+  //   }
+  // }, [contacts]);
 
-  const addToContacts = (id, name, number) => {
-    setContacts(prevState => [
-      ...prevState,
-      { id: id, name: name, number: number },
-    ]);
-  };
+  // const handleOnInputChange = e => {
+  //   const nameInput = e.currentTarget.name;
+  //   setFilter(e.target.value);
+  //   if (nameInput === 'filter') {
+  //     filterContacts();
+  //   }
+  // };
 
-  const deleteContact = e => {
-    const currentId = e.currentTarget.id;
-    const newArrContacts = contacts.filter(({ id }) => currentId !== id);
-    setContacts(newArrContacts);
-  };
+  // const addToContacts = (id, name, number) => {
+  //   setContacts(prevState => [
+  //     ...prevState,
+  //     { id: id, name: name, number: number },
+  //   ]);
+  // };
 
-  const filterContacts = () => {
-    const contactsArr = contacts;
+  // const deleteContact = e => {
+  //   const currentId = e.currentTarget.id;
+  //   const newArrContacts = contacts.filter(({ id }) => currentId !== id);
+  //   setContacts(newArrContacts);
+  // };
 
-    const contactsFindArr = contactsArr.filter(({ name }) => {
-      const nameContact = name.toLowerCase();
-      const nameFilter = filter.toLowerCase();
-      return nameContact.includes(nameFilter);
-    });
-    return contactsFindArr;
-  };
+  // const filterContacts = () => {
+  //   const contactsArr = contacts;
+
+  //   const contactsFindArr = contactsArr.filter(({ name }) => {
+  //     const nameContact = name.toLowerCase();
+  //     const nameFilter = filter.toLowerCase();
+  //     return nameContact.includes(nameFilter);
+  //   });
+  //   return contactsFindArr;
+  // };
 
   return (
     <div
@@ -69,13 +76,17 @@ export const App = () => {
       }}
     >
       <Section title="Phonebook">
-        <ContactForm addToContactsProps={addToContacts} items={contacts} />
+        <ContactForm
+        // addToContactsProps={addToContacts}
+        // items={contacts}
+        />
       </Section>
+      <ContactsCounter />
       <Section title="Contacts">
         <ContactList
-          onChangeProps={handleOnInputChange}
-          findItems={filterContacts()}
-          deleteContactProps={deleteContact}
+        // onChangeProps={handleOnInputChange}
+        // findItems={filterContacts()}
+        // deleteContactProps={deleteContact}
         />
       </Section>
     </div>
