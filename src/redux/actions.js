@@ -30,22 +30,21 @@
 // ===============================================================================================================
 // =============================================== After =========================================================
 
-import { createAction, nanoid } from '@reduxjs/toolkit';
+// import { createAction, nanoid } from '@reduxjs/toolkit';
 
-export const addContact = createAction(
-  'contacts/addContact',
-  (name, number) => {
-    return {
-      payload: {
-        id: nanoid(),
-        name,
-        number,
-      },
-    };
-  }
-);
-// console.log(addContact.payload);
-// console.log(addContact('aaaaaaaaa', 88888));
-export const deleteContact = createAction('contacts/deleteContact');
+// export const addContact = createAction(
+//   'contacts/addContact',
+//   (name, number) => {
+//     return {
+//       payload: {
+//         id: nanoid(),
+//         name,
+//         number,
+//       },
+//     };
+//   }
+// );
 
-export const setFilter = createAction('filter/setFilter');
+// export const deleteContact = createAction('contacts/deleteContact');
+
+// export const setFilter = createAction('filter/setFilter');

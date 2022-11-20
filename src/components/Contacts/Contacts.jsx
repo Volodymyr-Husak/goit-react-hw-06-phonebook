@@ -1,51 +1,11 @@
-// import css from './Contacts.module.css';
-// import propTypes from 'prop-types';
-
-// // const getVisibleContacts = (contacts, statusFilter) => {
-// //   switch (statusFilter) {
-// //     case statusFilters.active:
-// //       return tasks.filter(task => !task.completed);
-// //     case statusFilters.completed:
-// //       return tasks.filter(task => task.completed);
-// //     default:
-// //       return tasks;
-// //   }
-// // };
-// const getVisibleContacts = contacts => {
-//   return contacts.filter(contact => contact.include(filter));
-// };
-
-// export const Contacts = ({ findItems, deleteContactProps }) => {
-//   return findItems.map(({ name, number, id }) => (
-//     <li className={css.contact_item} key={id}>
-//       <span>
-//         &#10032; {name}: {number}
-//       </span>
-//       <button className={css.btn} onClick={deleteContactProps} id={id}>
-//         Видалити
-//       </button>
-//     </li>
-//   ));
-// };
-
-// Contacts.propTypes = {
-//   findItems: propTypes.array.isRequired,
-//   deleteContactProps: propTypes.func.isRequired,
-// };
-
-//============================================================================================================
-//============================================================================================================
-//============================================================================================================
-
 import css from './Contacts.module.css';
-// import propTypes from 'prop-types';
 import { useSelector } from 'react-redux'; //redux
 import { getContacts } from 'redux/selectors';
 import { getFilter } from 'redux/selectors';
 
 import { useDispatch } from 'react-redux';
-// Імпортуємо генератор екшену
-import { deleteContact } from 'redux/actions';
+
+import { deleteContact } from '../../redux/contactsSlice';
 
 const getVisibleContacts = (contacts, filter) => {
   if (filter.value.length === 0) {
@@ -62,7 +22,7 @@ const getVisibleContacts = (contacts, filter) => {
   return contactsFindArr;
 };
 
-export const Contacts = ({ findItems, deleteContactProps }) => {
+export const Contacts = () => {
   const contacts = useSelector(getContacts); //redux
   const filter = useSelector(getFilter); //redux
 
@@ -86,8 +46,3 @@ export const Contacts = ({ findItems, deleteContactProps }) => {
     </li>
   ));
 };
-
-// Contacts.propTypes = {
-//   findItems: propTypes.array.isRequired,
-//   deleteContactProps: propTypes.func.isRequired,
-// };

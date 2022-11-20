@@ -1,23 +1,16 @@
-// import propTypes from 'prop-types';
 import { Contacts } from './Contacts';
 import css from './Contacts.module.css';
 
-import { setFilter } from 'redux/actions'; //redux
+import { setFilter } from '../../redux/filterSlice'; //redux
 import { useDispatch } from 'react-redux'; //redux
 
-export const ContactList = ({
-  deleteContactProps,
-  onChangeProps,
-  findItems,
-}) => {
+export const ContactList = () => {
   const dispatch = useDispatch();
 
   const onChangeFilter = e => {
-    // dispatch(addContact(form.name.value, form.number.value));
-    // dispatch(deleteContact(currentId));
-    // console.log(e.currentTarget.value);
     dispatch(setFilter(e.currentTarget.value));
   };
+
   return (
     <div>
       <label>
@@ -28,22 +21,12 @@ export const ContactList = ({
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          // onChange={onChangeProps}
           onChange={onChangeFilter}
         />
       </label>
       <ul className={css.contacts_list}>
-        <Contacts
-        // findItems={findItems}
-        // deleteContactProps={deleteContactProps}
-        />
+        <Contacts />
       </ul>
     </div>
   );
 };
-
-// ContactList.propTypes = {
-//   onChangeProps: propTypes.func.isRequired,
-//   findItems: propTypes.array.isRequired,
-//   deleteContactProps: propTypes.func.isRequired,
-// };

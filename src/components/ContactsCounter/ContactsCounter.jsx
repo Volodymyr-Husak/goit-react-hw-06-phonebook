@@ -3,7 +3,7 @@ import { getContacts } from 'redux/selectors';
 import css from './ContactsCounter.module.css';
 export const ContactsCounter = () => {
   const contacts = useSelector(getContacts);
-  const contactsQuantity = contacts.length;
+  const contactsQuantity = contacts.arr.length;
 
   return (
     <div className={css.contacts_counter}>
